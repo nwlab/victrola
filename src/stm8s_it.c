@@ -27,6 +27,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_it.h"
+#include "stm8s_tim4.h"
+
+extern volatile uint32_t g_ms_ticks;
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -456,9 +459,8 @@ INTERRUPT_HANDLER(TIM6_UPD_OVF_TRG_IRQHandler, 23)
   */
  INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
 {
-  /* In order to detect unexpected events during development,
-     it is recommended to set a breakpoint on the following instruction.
-  */
+  g_ms_ticks++;
+  TIM4_ClearITPendingBit(TIM4_IT_UPDATE);
 }
 #endif /*STM8S903*/
 
